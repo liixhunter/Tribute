@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<a href="index.html">
+			<button class="btn-home">Home</button>
+		</a>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link type="image/png" size="120x120" rel="icon" href="icone/video.png">
+		<title>Video</title>
+		<style>
+			.video-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 400px;
+
+				video {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					display: none;
+				}
+
+				.btn-home {
+					background-color: inherit;
+					background-color: #6a706b;
+					border: none;
+					color: white;
+					padding: 15px 32px;
+					text-align: center;
+					text-decoration: none;
+					display: inline-block;
+					font-size: 16px;
+					margin: 4px 2px;
+					cursor: pointer;
+					border-radius: 10px;
+					poisition: none;
+					position: relative;
+					font-family: Ink Free;
+					bottom: -5%;
+					left: 45%;
+				}
+
+				.btn-home:hover {
+					background-color: #61646e;
+				}
+			}
+
+			video {
+				width: 100%;
+				display: block;
+				border: 10px ridge black;
+			}
+
+			.buttons {
+				display: flex;
+				justify-content: center;
+				margin-right: 20px;
+				position: relative;
+				left: 10%;
+			}
+
+			button {
+				padding: 15px 20px;
+				background-color: #333;
+				color: #ffff6b;
+				border: none;
+				border-radius: 5px;
+				font-size: 16px;
+				cursor: pointer;
+				margin: 0 10px;
+			}
+
+			button:focus {
+				outline: none;
+			}
+
+			.prev {
+				order: 1;
+			}
+
+			.stats-container {
+				text-align: center;
+				margin-top: 10px;
+				font-size: 10px;
+				color: white;
+			}
+
+			.next {
+				order: 3;
+			}
+
+			body {
+				background-image: url(image/image.jpg);
+				background-size: cover;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="stats-container">
+			<p></p>
+		</div>
+		<div class="video-container">
+			<div class="video">
+				<video controls="controls" preload="metadata" preload="auto">
+					<source src="video/test_video.mp4#t=0.5" type="video/mp4">
+				</video>
+			</div>
+			<div class="video">
+				<video controls="controls" preload="metadata" preload="auto">
+					<source src="video/test_video.mp4#t=0.5" type="video/mp4">
+				</video>
+			</div>
+			<div class="video">
+				<video controls="controls" preload="metadata" preload="auto">
+					<source src="video/test_video.mp4#t=0.5" type="video/mp4">
+				</video>
+			</div>
+			<div class="video">
+				<video controls="controls" preload="metadata" preload="auto">
+					<source src="video/test_video.mp4#t=0.5" type="video/mp4">
+				</video>
+			</div>
+			<div class="buttons">
+				<button class="prev" onclick="prevVideo()">Previous</button>
+				<button class="next" onclick="nextVideo()">Next</button>
+			</div>
+		</div>
+		</div>
+		<script>
+			var videos = document.querySelectorAll("video");
+			var currentVideoIndex = 0;
+
+			function showVideo(videoIndex) {
+				for (var i = 0; i < videos.length; i++) {
+					videos[i].pause();
+					videos[i].currentTime = 0;
+					videos[i].style.display = "none";
+				}
+				videos[videoIndex].style.display = "block";
+				videos[videoIndex].play();
+				currentVideoIndex = videoIndex;
+			}
+
+			function prevVideo() {
+				var prevVideoIndex = currentVideoIndex - 1;
+				if (prevVideoIndex < 0) {
+					prevVideoIndex = videos.length - 1;
+				}
+				showVideo(prevVideoIndex);
+			}
+
+			function nextVideo() {
+				var nextVideoIndex = currentVideoIndex + 1;
+				if (nextVideoIndex >= videos.length) {
+					nextVideoIndex = 0;
+				}
+				showVideo(nextVideoIndex);
+			}
+			showVideo(currentVideoIndex);
+			var vid = document.querySelector("video");
+			var last_media_time, last_frame_num, fps;
+			var fps_rounder = [];
+			var frame_not_seeked = true;
+
+			function ticker(useless, metadata) {
+				var media_time_diff = Math.abs(metadata.mediaTime - last_media_time);
+				var frame_num_diff = Math.abs(metadata.presentedFrames - last_frame_num);
+				var diff = media_time_diff / frame_num_diff;
+				if (diff && diff < 1 && frame_not_seeked && fps_rounder.length < 50 && vid.playbackRate === 1 && document.hasFocus()) {
+					fps_rounder.push(diff);
+					fps = Math.round(1 / get_fps_average());
+				}
+				frame_not_seeked = true;
+				last_media_time = metadata.mediaTime;
+				last_frame_num = metadata.presentedFrames;
+				vid.requestVideoFrameCallback(ticker);
+			}
+			vid.requestVideoFrameCallback(ticker);
+			vid.addEventListener("seeked", function() {
+				fps_rounder.pop();
+				frame_not_seeked = false;
+			});
+
+			function get_fps_average() {
+				return fps_rounder.reduce((a, b) => a + b) / fps_rounder.length;
+			}
+			// Part 1:
+			var vid = document.querySelector("video");
+			var last_media_time, last_frame_num, fps;
+			var fps_rounder = [];
+			var frame_not_seeked = true;
+			// Part 2 (with some modifications):
+			function ticker(useless, metadata) {
+				var media_time_diff = Math.abs(metadata.mediaTime - last_media_time);
+				var frame_num_diff = Math.abs(metadata.presentedFrames - last_frame_num);
+				var diff = media_time_diff / frame_num_diff;
+				if (diff && diff < 1 && frame_not_seeked && fps_rounder.length < 50 && vid.playbackRate === 1 && document.hasFocus()) {
+					fps_rounder.push(diff);
+					fps = Math.round(1 / get_fps_average());
+					document.querySelector("p").textContent = "FPS: " + fps + " | Certainty: " + fps_rounder.length * 2 + "%";
+				}
+				frame_not_seeked = true;
+				last_media_time = metadata.mediaTime;
+				last_frame_num = metadata.presentedFrames;
+				vid.requestVideoFrameCallback(ticker);
+			}
+			vid.requestVideoFrameCallback(ticker);
+			// Part 3:
+			vid.addEventListener("seeked", function() {
+				fps_rounder.pop();
+				frame_not_seeked = false;
+			});
+			// Part 4:
+			function get_fps_average() {
+				return fps_rounder.reduce((a, b) => a + b) / fps_rounder.length;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,122 @@
+/* Style de fond */
+body {
+  background: #000;
+  color: #fff;
+}
+
+/* Conteneur de la page de crédits */
+.credit-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+/* Style des éléments de crédits */
+.credit-item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  animation: credits-animation 60s linear;
+  animation-fill-mode: forwards;
+  transform-style: preserve-3d;
+  text-align: center;
+}
+
+/* Effet de transition */
+@keyframes credits-animation {
+  0% {
+    opacity: 0;
+    transform: translateZ(-2000px) rotateX(90deg);
+  }
+  5% {
+    opacity: 1;
+    transform: translateZ(-300px) rotateX(0deg);
+  }
+  30% {
+    transform: translateZ(-1000px) rotateX(0deg);
+  }
+  40% {
+    transform: translateZ(-1000px) rotateX(-10deg);
+  }
+  80% {
+    transform: translateZ(-2000px) rotateX(-90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(-2000px) rotateX(-90deg);
+  }
+}
+
+/* Style des titres */
+.credit-item h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+}
+
+/* Style des noms */
+.credit-item p {
+  font-size: 2em;
+  margin: 0.5em;
+}
+
+/* Style des noms en gras */
+.credit-item p strong {
+  font-weight: bold;
+}
+
+.style{font-family:Copperplate Gothic Light ; }
+
+/* Style des intervalles */
+.credit-item hr {
+  margin: 1.5em auto;
+  width: 80%;
+  height: 1px;
+  border: none;
+  background: #fff;
+  opacity: 0.5;
+}
+
+.texte{
+	
+	position:relative;
+	left:45%;
+	bottom:-10%;
+	border : 1px dotted white;
+	width:70px;
+
+
+}
+
+
+
+
+.btn-home {
+  background-color: #6a706b;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+  position:relative;
+  	font-family:Ink Free;
+bottom:-5%;
+  left:45%;
+
+}
+
+.btn-home:hover {
+  background-color: #61646e;
+}
+
