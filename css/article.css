@@ -66,7 +66,7 @@ p.copy:before {
 	width: 80px;
 	height: 100vh;
 	background: #333;
-	background-image: url(../image/bar.jfif);
+	background-image: url(../image/bar.png);
 }
 
 .contentContainer {
@@ -76,7 +76,7 @@ p.copy:before {
 	min-height: 100vh;
 	padding-left: 80px;
 	float: left;
-	background-image: url(../image/grey-bar.jfif);
+	background-image: url(../image/grey-bar.png);
 }
 
 .imageContainer {
